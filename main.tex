@@ -1,0 +1,400 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+%This is s template developed by Mark Munyi for chem496 taught by Prof. Samantha Yruegas.
+
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamercolor{title}{fg=black}
+\setbeamercolor{frametitle}{fg=black}
+\usefonttheme{professionalfonts}
+
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{caption}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{geometry}
+\geometry{papersize={16cm, 9cm}}
+\usepackage{appendixnumberbeamer}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{braket}
+\usepackage{bibentry}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage[backend=biber, style =authoryear]{biblatex}
+\addbibresource{references.bib}
+\nobibliography*
+
+\AtEveryCitekey{\color{red}}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{geometry}
+\geometry{papersize={16cm, 9cm}}
+
+
+\definecolor{darkblue}{RGB}{0, 51, 102} 
+\definecolor{lightblue}{RGB}{70, 130, 180}
+
+\usepackage{xspace}
+
+\setbeamertemplate{footline}{
+  \hfill
+  \usebeamercolor[fg]{title}
+  \textcolor{lightblue}{\normalsize\insertframenumber}
+  \vspace{10pt}
+  \hspace{8pt}
+}
+
+\setbeamertemplate{frametitle}{
+  \vspace{-2.0ex} 
+  \begin{center}
+    \textbf{\insertframetitle} 
+  \end{center}
+}
+
+\setbeamertemplate{headline}{
+  \vspace{1ex} 
+  \begin{beamercolorbox}[wd=\paperwidth,ht=5ex,dp=2ex]{frametitle}
+    \hspace{2em}
+    \large\textit{\textcolor{darkblue}{Advanced Inorganic Chemistry}} \vspace{-0.5ex} 
+    %\small\textit{\textcolor{cyan}{CHEM 496/596}} 
+    \hfill
+    \textbf{Student Presentation}
+    \hspace{0.5em}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=0.3\paperwidth,ht=4ex,dp=2ex]{frametitle}
+    \hspace{2em}
+    \large\textcolor{lightblue}{CHEM 496/596}
+  \end{beamercolorbox}
+}
+
+\begin{document}
+
+
+\begin{frame}
+ 
+  \vspace{1cm}
+  \begin{center}
+    {\LARGE \textbf{Main Group DFT}} 
+
+    \vspace{1cm}
+    \begin{equation*}
+        \Huge\mathbf{{-i\hbar\frac{\partial}{\partial t}\ket{\Psi} = \hat{H}\ket{\Psi}}}
+    \end{equation*}
+    \vspace{1cm}
+
+    {\color{lightblue}\large Mark Munyi \\ 12/03/24 \\ CHEM 496/596} 
+  \end{center}
+\end{frame}
+
+\begin{frame}{Off Topic}
+\begin{columns}
+    \column{0.3\linewidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{WhatsApp Image 2024-11-26 at 21.04.51.jpeg}
+        \caption*{}
+        \label{fig:enter-label}
+    \end{figure}
+    
+    \column{0.3\linewidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{PXL_20240224_213714052.jpg}
+        \caption*{}
+        \label{fig:enter-label}
+    \end{figure}
+    \column{0.3\linewidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{PXL_20241026_214049602.jpg}
+        \caption*{}
+        \label{fig:enter-label}
+    \end{figure}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Introduction}
+  \begin{itemize}
+    \item Primary goal of the electronic structure theory is to solve the he time independent schröndinger equation, TISE.
+    \begin{equation}
+        \hat{H} \Psi = E\Psi
+    \end{equation} where $\hat{H}$ is the Molecular Hamiltonian.
+    \item Solutions to the equation tell us alot about a system including
+    \begin{enumerate}
+        \item The he kinetic and Potential energies
+        \item The most stable geometries
+        \item Vibrational electronic energy levels.
+    \end{enumerate}\\
+    
+   \begin{columns}
+       \column{0.5\linewidth}
+       \scriptsize{"The underlying physical laws necessary for the  mathematical theory of the whole of chemistry are completely known, and the difficulty is only that the exact application of these laws leads to equations much too complicated to be soluble."- P. Dirac"}
+       
+       
+       \column{0.5\linewidth}
+       \vspace{-1cm}
+       \begin{figure}
+           \centering
+           \includegraphics[width=0.5\linewidth]{erwin.jpeg}
+           \caption*{$\rightarrow$ Nobel Prize Physics: 1933 for the \textbf{Sch\"ondinger equation}}
+           \label{fig:enter-label}
+       \end{figure}
+   \end{columns}
+    
+  \end{itemize}
+\end{frame}
+\begin{frame}{The Electronic Structure Problem}
+The non-relativistic Born-Oppenheimer Hamiltonian:
+\begin{equation}
+    \small{\hat{H} = 
+      -{\color{magenta}\frac{1}{2}\sum_i \nabla^2_i} - {\color{blue}\sum_i\sum_{\alpha}\frac{Z_{\alpha}}{|R_i-d_{\alpha}|}} + {\color{cyan}\frac{1}{2}\sum_1\sum_{j\neq i} \frac{1}{|R_i - R_j|}}}
+\end{equation}
+{\color{magenta}Electronic Kinetic energy(solvable)}, 
+{\color{blue}electron-nuclei potential}(solvable),
+{\color{cyan}electron-electron potential term(hard)}\\
+$\rightarrow$ So many DOF makes it impossible to solve the Schöndinger equation, i.e, 3N
+
+    
+\end{frame}
+\begin{frame}{But what are wavefunctions?}
+\begin{itemize}
+    \item They describe the possibility of of finding an electron at some given coordinates. We  cannot directly measure the wavefunction.
+    \begin{equation}
+        |\Psi|^2
+    \end{equation}
+    \item This closely resembles the electron density at some $r$, i.e how many electron will on average be found at some $r$
+    \begin{equation}
+        n(\vec r) = 2\sum_i \psi_i^*(\vec r)\psi_i(\vec r)
+    \end{equation}
+    \item[\rightarrow] This is just three coordinates, observable(from the wavefunction) and contains a lot of information about a system
+
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Density Function Theory}
+\begin{itemize}
+    \item Builds from two main mathematical theorems.
+    \begin{center}
+    \begin{enumerate}
+        \item{That the ground state energy is a \textbf{unique functional}  of the electron density.}
+        \item That the electron density with the \textbf{minimum energy} is the \textbf{true density} corresponding to the full solutions of the Sch\"ondinger equation.
+    
+    \end{enumerate}
+    \end{center}
+    
+    \item A one to one map of the groundstate energy and the electron density exists, s.t
+
+    \begin{equation}
+        E[n(\vec r)] = E
+    \end{equation}
+    $\therefore$ There is a one-one mapping between the groundstate $\psi$ and the $n(r)$
+    \item Enables us solve for the density instead of a wavefunction - reduced DOF
+
+    \begin{columns}
+        \color{0.30\linewidth}
+        $\rightarrow$Walter Kohn and John Pople, Nobel Prize, 1998
+        \column{0.25\linewidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\linewidth]{John-pople.jpg}
+            \caption*{Kohn \& Pople}
+            \label{fig:enter-label}
+        \end{figure}
+    \end{columns}
+\end{itemize} 
+\end{frame}
+
+\begin{frame}{What is a functional?}
+\begin{itemize}
+    \item A mathematical relation that takes a function and returns a single number as an output. 
+    \item Take for example:-
+    \begin{equation}
+        F[f(x)] = \int_{-1}^1f(x)dx; \forall f(x)
+    \end{equation} with $f(x) = x^2 +1 $. Here, $F[f(x)] = \frac{8}{3}$.
+    
+
+
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Kohn-Sham Equations}
+\begin{itemize}
+    \item The complete energy functional, $E[{\psi_i}]$ can be decomposed into two parts: {\scriptsize{Wavefunction technically represent the electron density}}
+    \begin{equation}
+        E[{\psi_i}] = E_{known}[{\psi_i}] + E_{XC}[{\psi_i}]
+    \end{equation}, "Known" and "eXchange Correlation"
+    \item Known part contains $E_{known}[{\psi}]$ Contains the Electron Kinetic Energy, The Electron nuclei interaction, The electron electron interaction and the nuclei nuclei interaction.
+    \item $E_{XC}$ Contains all the difficult to deal with effects not included in the $E_{Known}$, including self interaction
+\end{itemize}
+\centering
+    \vfill
+    \vspace{1cm}
+    \scriptsize{Mardirossian, N.,Head-Gordon, M, Mol. Phys. 2017,115(19), 2315–2372}
+
+\end{frame}
+
+\begin{frame}{Kohn-Sham Equations}
+\begin{itemize}
+    \item The $E_{known}$ and $E_{XC}$ are both functionals of  the electron density.
+    \item Solving for the density involves solves the so called Kohn-Sham equations. Each involves a \textbf{single Electron}.
+    \begin{equation}
+        \left[\frac{1}{2}\nabla^2+{\color{red}v(\vec r)+V_H(\vec r) + V_{xc}(\vec r)}\right] \psi_i(\vec r) = \varepsilon_i\psi_i(\vec r)
+    \end{equation} where the first term is the Kinetic Energy,$V(\vec r)$ is electron-nuclei potential, $V_H(\vec r)$ is the Hartree potential, i.e electron-electron density interaction.
+    \begin{equation}
+        V_H(\vec r) = \int \frac{n(\vec r')}{|\vec r - \vec r'|}d^3r'
+    \end{equation} involves a self interaction. 
+    \begin{equation}
+        V_{XC} = \frac{\delta E_{xc}(\vec r)}{\delta n(\vec r)}
+    \end{equation} is a functional derivative of the \textbf{exchange correlation energy w.r.t the electron density.}
+\end{itemize}
+\centering
+    \vfill
+    \vspace{0.4cm}
+    \scriptsize{Mardirossian, N.,Head-Gordon, M, Mol. Phys. 2017,115(19), 2315–2372}
+    
+\end{frame}
+\begin{frame}{Something is Fishy}
+\begin{columns}
+    \column{0.5\linewidth}
+    \begin{itemize}
+        \item To solve the \textbf{KS equations}, we need to know the \textbf{Hartree Potential}. But to solve for the Hartree potential, we need to find the \textbf{electron density}. But to solve for the electron density, we need to know the \textbf{single electron wavefunctions}. But to find the single electron wavefunctions, we need to solve the \textbf{KS equations}.
+
+        $\rightarrow$ \color{red}We also need to define the \textbf{XC} functional, which is generally not known and must be approximated.
+        (Big issue with DFT)
+    \end{itemize}
+    \column{0.5\linewidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{Chill guy.jpeg}
+        \caption*{So many DFT functionals have been developed (200+). It's very hard to know which is good for a system. It's not systemically scalable}.
+        \label{fig:enter-label}
+    \end{figure}
+\end{columns}
+    
+\end{frame}
+
+\begin{frame}{What Algorithms do}
+\begin{figure}
+    \includegraphics[width=0.90\linewidth]{Presentation1.pptx.jpg}
+    \caption*{}
+    \label{fig:enter-label}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Major Applications: Geometry Optimization \& Elucidation}
+\begin{columns}
+    \column{0.5\linewidth}
+    \begin{itemize}
+    \item Remember that cotton paper?
+    \item The use of DFT to understand and predict the structure of compounds. The optimized electron density from the KS equation gives an idea where the electrons are most likely located, hence bonding insights.
+    \end{itemize}
+    \column{0.5\linewidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{Screenshot 2024-11-29 at 13.38.52.png}
+        \caption*{Probing Ga$\equiv$Ga}
+        \label{fig:enter-label}
+    \end{figure}
+\end{columns}
+    \centering
+    \vfill
+    \scriptsize{Cotton, A., Cowley, A., Feng, X., J. Am. Chm. Soc. 1998, 120, 1795-1799}  
+    
+\end{frame}
+\begin{frame}{Eigenstates and Orbitals: HOMO - LUMO}
+\begin{columns}
+\column{0.5\linewidth}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Homo.jpg}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+\column{0.5\linewidth}
+\vspace{-3cm}
+\begin{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{potassium.png}
+    \caption*{Can be used to determines the structure of the HOMO and LUMO which elucidates the bonding iterations}
+    \label{fig:enter-label}
+\end{figure}
+\centering
+    \vfill
+    \scriptsize{Choudhary, v., Bhatt, A., Dash, D., Sharma, N., J. Comp. Chm. 2019, 40, 27, 2354-2363} 
+\end{itemize}
+    
+\end{columns}
+\end{frame}
+
+\begin{frame}{Energies: HOMO-LUMO gap}
+\begin{columns}
+    \column{0.5\linewidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{gap.jpg}
+        \caption*{}
+        \label{fig:enter-label}
+    \end{figure}
+    \column{0.5\linewidth}
+    \begin{itemize}
+        \item[\dagger] A study of the HOMO-LUMO gap for dimethylaminobenzylidene-nitroaniline, DBN
+        \item[\dagger] HOMO-LUMO gap dictates the reactivity of systems
+    \end{itemize}
+    \centering
+    \vfill
+    \vspace{1cm}
+    \scriptsize{El-Mansy, M., El-Nahass, M., Khusafyan, N., El-Menyawy, E., Science, 2013, 111, 217-222}
+    
+\end{columns}
+\end{frame}
+
+\begin{frame}{Where can you find DFT?}
+\begin{itemize}
+    \item A lot of consumer codes as well as developer codes have support for DFT.
+    \item Open source codes such as:
+    \begin{enumerate}
+        \item Quantum Espresso: $\rightarrow$ geometry Optimization, Molecular dynamics etc: {quantum-espresso.org}
+        \item DFTB+ $\rightarrow$ Tight-Binding model, useful for large systems: dftbplus.org 
+    \end{enumerate}
+    \item Closed-source codes like:
+    \begin{enumerate}
+        \item VASP$\rightarrow$ Very commonly used and well developed: vasp.at (free)
+        \item Q-chem $\rightarrow$ Vast Quantum Chemistry package with DFT and Post HF methods: q-chem.com
+        \item Orca $\rightarrow$ Usable for large systems
+        
+    \end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Future Directions}
+\begin{itemize}
+    \item TDDFT (Time-Dependent Density Functional Theory) is in active development right now.
+    \item (Extended)Tight-Binding Density Functional Theory also in active development.
+    \item More accurate Functionals are also in development, i.e beyond LDA and GGA functionals like meta-GGA.
+    \item Machine Learning to help predict the functionals to use.\\
+    {\centering \scriptsize{Nagai, R., Akashi, R. & Sugino, O., Nature, 2020, 6, 43 }}
+    \item Interest in strongly correlated systems, with Hybrid methods.\\
+    {\centering \scriptsize{Danilov, D., Ganoe, B., Munyi, M., Shee, J., chemR$\chi$iv, 2024, DOI:10.26434}}
+    \item Parallelization and GPU acceleration - Linear scaling Alorithms.
+\end{itemize} 
+\end{frame}
+
+\begin{frame}{}
+\centering
+\Large{Thank you so much!}\\
+Questions?
+    
+\end{frame}
+
+\end{document}
